@@ -8,6 +8,10 @@ The `MetricTracker` is a versatile Python module designed for logging and visual
 - **Dynamic Visualization**: Plot current metrics and compare them with data from previous sessions.
 - **Git Integration**: Use git tags to manage different versions of metrics logs for comprehensive tracking and historical comparison.
 
+## Installation
+
+The simplest way to install MetricTracker is to clone `MetricTracker.py` in your project's directory. Then get right to work!
+
 ## Usage
 
 ### Basic Usage
@@ -15,7 +19,7 @@ The `MetricTracker` is a versatile Python module designed for logging and visual
 1. **Initialize the Tracker**: Specify the metrics you want to track.
 
    ```python
-   from metric_tracker import MetricTracker
+   from MetricTracker import MetricTracker
    mt = MetricTracker(['episode_num', 'reward'])
    ```
 
