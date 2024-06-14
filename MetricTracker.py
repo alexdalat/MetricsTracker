@@ -69,17 +69,22 @@ class MetricTracker:
         plt.show()
 
 
-def get_tags(tag_pattern):
-    result = subprocess.check_output(['git', 'tag', '-l', tag_pattern]).decode().strip().split()
-    return result
+def get_tags_with_dates(tag_pattern):
+    tags = subprocess.check_output(['git', 'tag', '-l', tag_pattern]).decode().strip().split()
+    tag_dates = {}
+    for tag in tags:
+        commit_hash = subprocess.check_output(['git', 'rev-list', '-n', '1', tag]).decode().strip()
+        commit_date = subprocess.check_output(['git', 'show', '-s', '--format=%cd', commit_hash]).decode().strip()
+        tag_dates[tag] = commit_date
+    return tag_dates
 
-def plot_data(tags, filename, tag_name):
+def plot_data(tags_with_dates, filename, tag_name):
     plt.figure(figsize=(10, 5))
     plt.title(f'Metrics Over Time for {tag_name}')
     plt.xlabel('Time or Counter')
     plt.ylabel('Metric Value')
     
-    for tag in tags:
+    for tag, date in tags_with_dates.items():
         file_content = subprocess.check_output(['git', 'show', f"{tag}:{filename}"]).decode()
         df = pd.read_csv(io.StringIO(file_content))
 
@@ -89,7 +94,7 @@ def plot_data(tags, filename, tag_name):
             metric_column = df.columns[1]  # Fallback to second column
         
         x_axis = df.columns[0]  # Always use the first column for the x-axis
-        plt.plot(df[x_axis], df[metric_column], marker='o', linestyle='-', label=tag)
+        plt.plot(df[x_axis], df[metric_column], marker='o', linestyle='-', label=f"{tag} ({date})")
 
     plt.legend()
     plt.grid(True)
@@ -103,8 +108,8 @@ def main():
         return 1
 
     tag_name = sys.argv[1]
-    tags = get_tags(f'plot-{tag_name}*')
-    plot_data(tags, 'metrics_log.csv', tag_name)
+    tags_dates = get_tags_with_dates(f'plot-{tag_name}*')
+    plot_data(tags_dates, 'metrics_log.csv', tag_name)
     return 0
 
 if __name__ == '__main__':

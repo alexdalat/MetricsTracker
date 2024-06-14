@@ -10,7 +10,7 @@ The `MetricTracker` is a versatile Python module designed for logging and visual
 
 ## Installation
 
-The simplest way to install MetricTracker is to clone `MetricTracker.py` in your project's directory. Then get right to work!
+The simplest way to install MetricTracker is to clone `MetricTracker.py` in your project's directory.
 
 ## Usage
 
