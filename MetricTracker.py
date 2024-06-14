@@ -1,4 +1,5 @@
 import sys
+import io
 import os
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -80,7 +81,7 @@ def plot_data(tags, filename, tag_name):
     
     for tag in tags:
         file_content = subprocess.check_output(['git', 'show', f"{tag}:{filename}"]).decode()
-        df = pd.read_csv(pd.compat.StringIO(file_content))
+        df = pd.read_csv(io.StringIO(file_content))
 
         if tag_name in df.columns:
             metric_column = tag_name
