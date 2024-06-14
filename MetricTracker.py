@@ -92,7 +92,6 @@ def plot_data(tags, filename, tag_name):
         plt.plot(df[x_axis], df[metric_column], marker='o', linestyle='-', label=tag)
 
     plt.legend()
-    plt.xticks(rotation=45)
     plt.grid(True)
     plt.tight_layout()
     plt.show()
