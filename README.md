@@ -39,13 +39,24 @@ The `MetricTracker` is a versatile Python module designed for logging and visual
   ```python
   mt.plot_comparison()  # Compare current and previous (old) session metrics
   ```
-
-### Visual Examples
-
-- **Current and Previous Session Comparison**
-
   ![Example Tracker Code Usage](exampleTrackerCode.png)
 
-- **Collecting and Visualizing Metrics From Git Tags**
+### Visualizing Metrics from Git Tags
+
+1. **Tag Your Metrics Commit**: After updating your metrics, tag your commit to make it retrievable:
+
+   ```bash
+   git add metrics_log.csv
+   git commit -m "Updated metrics log"
+   git tag -a plot-unique-tag-name-initial-test -m "Description of the data or session"
+   ```
+
+2. **Retrieve and Plot Tagged Data**: Use the `MetricTracker.py` script to fetch and visualize metrics:
+
+   ```bash
+   python MetricTracker.py unique-tag-name
+   ```
+
+   Replace `unique-tag-name` with the tag name excluding the `plot-` prefix. The script fetches all related tags, compiles their data, and plots them for comparison.
 
   ![Example Tracker Git Integration](exampleTrackerGit.png)
